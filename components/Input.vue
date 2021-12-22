@@ -32,5 +32,6 @@ export default {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
   border-radius: 4px;
   font-size: 20px;
+  background-color: $light-grey;
 }
 </style>

@@ -30,7 +30,7 @@ export default {
 <style lang="scss" scoped>
 .card {
   display: flex;
-  background-color: #fafafa;
+  background-color: $light-grey;
   margin-bottom: 20px;
   align-items: flex-start;
   padding: 20px;

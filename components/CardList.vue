@@ -1,10 +1,6 @@
 <template>
   <div class="card-list">
-    <Card
-      v-for="(user, i) in filteredUsers"
-      :key="user.email + i"
-      :item="user"
-    />
+    <Card v-for="(user, i) in items" :key="user.email + i" :item="user" />
   </div>
 </template>
 
