@@ -27,7 +27,7 @@ export default {
     return {
       query: '',
       users,
-      filteredUsers: [],
+      filteredUsers: users.slice(0, 5),
     }
   },
   watch: {
@@ -40,10 +40,12 @@ export default {
       const filtered = users?.filter((obj) =>
         Object.entries(obj).some(
           ([key, value]) =>
-            key !== 'avatar' && String(value).toLowerCase().includes(query)
+            key !== 'avatar' &&
+            String(value).toLowerCase().includes(query.toLowerCase())
         )
       )
       this.filteredUsers = filtered.slice(0, 5)
+      console.log(this.filteredUsers)
     }, 1000),
   },
 }
