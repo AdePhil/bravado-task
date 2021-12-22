@@ -32,7 +32,7 @@ export default {
   mixins: [SearchMixin],
 
   mounted() {
-    this.query = this.$route.params.search
+    this.query = this.$route.params.search || ''
     this.updateResults(this.query)
   },
 }

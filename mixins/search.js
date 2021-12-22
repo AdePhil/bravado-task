@@ -11,16 +11,26 @@ const searchMixin = {
       perPage: 10,
       filteredUsers: users.slice(0, 10),
       scrollData: [],
+      infiniteId: +new Date(),
     }
   },
+
+  mounted() {
+    this.updateResults(this.query)
+  },
+
   watch: {
     query(value) {
       this.debounceInput(value)
     },
   },
   methods: {
+    refreshInfiniteLoading() {
+      this.infiniteId += 1
+    },
     handleClearInput() {
       this.query = ''
+      this.refreshInfiniteLoading()
     },
     handleScroll($state) {
       setTimeout(() => {
@@ -88,6 +98,7 @@ const searchMixin = {
       this.filteredUsers = this.highlighUsers(query, filtered)
     },
     debounceInput: debounce(function (query) {
+      this.refreshInfiniteLoading()
       this.scrollData = []
       this.filteredUsers = []
       this.page = 1
