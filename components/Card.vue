@@ -46,6 +46,7 @@ export default {
     cursor: pointer;
     color: $green2;
     transition: color 200ms ease;
+    padding: 0;
     &:hover {
       color: $green;
     }
@@ -82,9 +83,21 @@ export default {
   }
   .email {
     margin-left: auto;
+    margin-right: 10px;
   }
   .title {
     font-weight: 600;
+  }
+}
+@media (max-width: 750px) {
+  .card {
+    flex-direction: column;
+    .center-text {
+      margin-top: 0;
+    }
+    .email {
+      margin-left: 0;
+    }
   }
 }
 </style>
