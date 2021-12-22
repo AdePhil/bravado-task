@@ -31,7 +31,8 @@ $ yarn generate
 
 ## Features Covered
 
-- Search for users and display each user on a card
+- Implemented search for users
+- Added User card to display search results
 - Debounced search input
 - Implemented infinite scroll to optimize data fetching
 - Clear Input button
