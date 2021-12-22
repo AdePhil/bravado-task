@@ -11,7 +11,9 @@
         <p>,&nbsp;</p>
         <p class="city" v-html="item.city"></p>
       </div>
-      <button class="action">SKIP SELECTION</button>
+      <div class="action-divider">
+        <button class="action">SKIP SELECTION</button>
+      </div>
     </div>
     <p class="email" v-html="item.email"></p>
   </div>
@@ -39,14 +41,17 @@ export default {
   border: 2px solid transparent;
 
   .action {
+    &-divider {
+      border-top: 1px solid $grey;
+      margin-top: 30px;
+    }
+    padding: 20px 0;
     background-color: transparent;
     border: none;
     outline: none;
-    margin-top: 30px;
     cursor: pointer;
     color: $green2;
     transition: color 200ms ease;
-    padding: 0;
     &:hover {
       color: $green;
     }
@@ -87,6 +92,9 @@ export default {
   }
   .title {
     font-weight: 600;
+  }
+  .center-text {
+    flex: 1;
   }
 }
 @media (max-width: 750px) {
