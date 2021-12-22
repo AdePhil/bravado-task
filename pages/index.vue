@@ -2,11 +2,7 @@
   <div class="app">
     <div class="container">
       <Input v-model="query" name="search" />
-      <Card
-        v-for="(user, i) in filteredUsers"
-        :key="user.email + i"
-        :item="user"
-      />
+      <CardList :items="filteredUsers" />
     </div>
   </div>
 </template>
@@ -14,14 +10,14 @@
 <script>
 import debounce from 'lodash.debounce'
 import Input from '~/components/Input'
-import Card from '~/components/Card'
+import CardList from '~/components/CardList'
 import users from '~/static/users.json'
 
 export default {
   name: 'IndexPage',
   components: {
     Input,
-    Card,
+    CardList,
   },
   data() {
     return {
@@ -36,12 +32,8 @@ export default {
     },
   },
   methods: {
-    debounceInput: debounce(function (query) {
-      if (!query) {
-        this.filteredUsers = users.slice(0, 5)
-        return
-      }
-      const filtered = users
+    getFilteredUsers(query) {
+      return users
         ?.filter((obj) =>
           Object.entries(obj).some(([key, value]) => {
             return (
@@ -51,24 +43,33 @@ export default {
           })
         )
         .slice(0, 5)
+    },
+    highlighUsers(query, filteredUsers) {
       const regex = new RegExp(query, 'gi')
-      this.filteredUsers = filtered.map((data) => {
+      return filteredUsers.map((data) => {
         return Object.entries(data).reduce((acc, [key, value]) => {
           const modifiedValue = value.replace(
             regex,
             `<span class="highlight">${query}</span>`
           )
-
           if (key !== 'avatar') {
             acc[key] = modifiedValue
           } else {
             acc[key] = value
           }
-
           return acc
         }, {})
       })
-      console.log('test', this.filteredUsers)
+    },
+
+    debounceInput: debounce(function (query) {
+      if (!query) {
+        this.filteredUsers = users.slice(0, 5)
+        return
+      }
+      const filtered = this.getFilteredUsers(query)
+
+      this.filteredUsers = this.highlighUsers(filtered)
     }, 1000),
   },
 }
@@ -85,5 +86,7 @@ export default {
   margin: 0 auto;
   max-height: 700px;
   overflow-y: scroll;
+  padding: 20px;
+  background-color: white;
 }
 </style>

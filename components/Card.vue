@@ -8,7 +8,7 @@
       <p class="title" v-html="item.title">{{}}</p>
       <div class="full-address">
         <p class="address" v-html="item.address"></p>
-        <span>, </span>
+        <p>,&nbsp;</p>
         <p class="city" v-html="item.city"></p>
       </div>
     </div>
