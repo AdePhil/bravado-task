@@ -3,6 +3,11 @@
     <div class="container">
       <Input v-model="query" name="search" />
       <CardList :items="filteredUsers" />
+      <infinite-loading
+        v-if="filteredUsers.length"
+        spinner="bubbles"
+        @infinite="handleScroll"
+      ></infinite-loading>
     </div>
   </div>
 </template>
@@ -23,7 +28,10 @@ export default {
     return {
       query: '',
       users,
-      filteredUsers: users.slice(0, 5),
+      page: 1,
+      perPage: 10,
+      filteredUsers: users.slice(0, 10),
+      scrollData: [],
     }
   },
   watch: {
@@ -32,9 +40,15 @@ export default {
     },
   },
   methods: {
-    getFilteredUsers(query) {
-      return users
-        ?.filter((obj) =>
+    handleScroll($state) {
+      setTimeout(() => {
+        this.page += 1 // next page
+        this.updateResults(this.query, $state)
+      }, 2000)
+    },
+    getFilteredUsers(query, $scrollState) {
+      if (this.scrollData.length === 0) {
+        this.scrollData = users?.filter((obj) =>
           Object.entries(obj).some(([key, value]) => {
             return (
               key !== 'avatar' &&
@@ -42,7 +56,22 @@ export default {
             )
           })
         )
-        .slice(0, 5)
+      }
+      const start = this.perPage * (this.page - 1)
+      const end = this.perPage * this.page
+
+      const filteredUsers = [
+        ...this.filteredUsers,
+        ...this.scrollData.slice(start, end),
+      ]
+
+      if ($scrollState && end < this.scrollData.length) {
+        $scrollState.loaded()
+      } else if ($scrollState && end > this.scrollData.length) {
+        $scrollState.complete()
+      }
+
+      return filteredUsers
     },
     highlighUsers(query, filteredUsers) {
       const regex = new RegExp(query, 'gi')
@@ -61,14 +90,27 @@ export default {
         }, {})
       })
     },
-
-    debounceInput: debounce(function (query) {
+    updateResults(query, $scrollState) {
       if (!query) {
-        this.filteredUsers = users.slice(0, 5)
+        const start = this.perPage * (this.page - 1)
+        const end = this.perPage * this.page
+        this.filteredUsers = [...this.filteredUsers, ...users.slice(start, end)]
+
+        if ($scrollState && end < users.length) {
+          $scrollState.loaded()
+        } else if ($scrollState && end > users.length) {
+          $scrollState.complete()
+        }
         return
       }
-      const filtered = this.getFilteredUsers(query)
+      const filtered = this.getFilteredUsers(query, $scrollState)
       this.filteredUsers = this.highlighUsers(query, filtered)
+    },
+    debounceInput: debounce(function (query) {
+      this.scrollData = []
+      this.filteredUsers = []
+      this.page = 1
+      this.updateResults(query)
     }, 1000),
   },
 }
