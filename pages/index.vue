@@ -17,6 +17,7 @@ import debounce from 'lodash.debounce'
 import Input from '~/components/Input'
 import CardList from '~/components/CardList'
 import users from '~/static/users.json'
+import config from '~/config'
 
 export default {
   name: 'IndexPage',
@@ -44,7 +45,7 @@ export default {
       setTimeout(() => {
         this.page += 1 // next page
         this.updateResults(this.query, $state)
-      }, 2000)
+      }, config.infiniteScrollTime)
     },
     getFilteredUsers(query, $scrollState) {
       if (this.scrollData.length === 0) {
@@ -59,7 +60,6 @@ export default {
       }
       const start = this.perPage * (this.page - 1)
       const end = this.perPage * this.page
-
       const filteredUsers = [
         ...this.filteredUsers,
         ...this.scrollData.slice(start, end),
@@ -111,7 +111,7 @@ export default {
       this.filteredUsers = []
       this.page = 1
       this.updateResults(query)
-    }, 1000),
+    }, config.debounceInputTime),
   },
 }
 </script>
