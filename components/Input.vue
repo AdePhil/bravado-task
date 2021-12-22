@@ -9,6 +9,7 @@
       type="text"
       :name="name"
       class="input"
+      :placeholder="placeholder"
       @input="$emit('input', $event.target.value)"
     />
     <button v-if="showClearButton" class="close" @click="clear">X</button>
@@ -18,6 +19,10 @@
 <script>
 export default {
   props: {
+    placeholder: {
+      type: String,
+      default: '',
+    },
     handleClear: {
       type: Function,
       default: () => {},

@@ -2,7 +2,12 @@
   <div class="app">
     <div class="container">
       <div class="fixed-input">
-        <Input v-model="query" name="search" :handle-clear="handleClearInput" />
+        <Input
+          v-model="query"
+          name="search"
+          :handle-clear="handleClearInput"
+          placeholder="Search for user"
+        />
       </div>
       <CardList :items="filteredUsers" />
       <infinite-loading
