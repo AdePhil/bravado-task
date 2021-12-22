@@ -37,15 +37,38 @@ export default {
   },
   methods: {
     debounceInput: debounce(function (query) {
-      const filtered = users?.filter((obj) =>
-        Object.entries(obj).some(
-          ([key, value]) =>
-            key !== 'avatar' &&
-            String(value).toLowerCase().includes(query.toLowerCase())
+      if (!query) {
+        this.filteredUsers = users.slice(0, 5)
+        return
+      }
+      const filtered = users
+        ?.filter((obj) =>
+          Object.entries(obj).some(([key, value]) => {
+            return (
+              key !== 'avatar' &&
+              String(value).toLowerCase().includes(query.toLowerCase())
+            )
+          })
         )
-      )
-      this.filteredUsers = filtered.slice(0, 5)
-      console.log(this.filteredUsers)
+        .slice(0, 5)
+      const regex = new RegExp(query, 'gi')
+      this.filteredUsers = filtered.map((data) => {
+        return Object.entries(data).reduce((acc, [key, value]) => {
+          const modifiedValue = value.replace(
+            regex,
+            `<span class="highlight">${query}</span>`
+          )
+
+          if (key !== 'avatar') {
+            acc[key] = modifiedValue
+          } else {
+            acc[key] = value
+          }
+
+          return acc
+        }, {})
+      })
+      console.log('test', this.filteredUsers)
     }, 1000),
   },
 }

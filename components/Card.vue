@@ -4,11 +4,15 @@
       <img :src="item.avatar" :alt="item.name" class="image" />
     </div>
     <div class="center-text">
-      <h2 class="name">{{ item.name }}</h2>
-      <p class="title">{{ item.title }}</p>
-      <p class="address">{{ item.address }}</p>
+      <h2 class="name" v-html="item.name"></h2>
+      <p class="title" v-html="item.title">{{}}</p>
+      <div class="full-address">
+        <p class="address" v-html="item.address"></p>
+        <span>, </span>
+        <p class="city" v-html="item.city"></p>
+      </div>
     </div>
-    <p class="email">{{ item.email }}</p>
+    <p class="email" v-html="item.email"></p>
   </div>
 </template>
 
@@ -33,12 +37,17 @@ export default {
   transition: 200ms ease;
   border: 2px solid transparent;
 
+  .full-address {
+    display: flex;
+    align-items: center;
+    color: $text-color;
+  }
   .name {
     margin-top: 0;
     font-size: 25px;
   }
   p {
-    color: #666;
+    color: $text-color;
     margin-bottom: 8px;
     margin-top: 0;
     font-size: 14px;
