@@ -100,11 +100,27 @@ export default {
 @media (max-width: 750px) {
   .card {
     flex-direction: column;
+    .name {
+      margin-top: 20px;
+    }
     .center-text {
       margin-top: 0;
     }
     .email {
       margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .card {
+    .image {
+      &-bg {
+        width: 100%;
+      }
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
     }
   }
 }
