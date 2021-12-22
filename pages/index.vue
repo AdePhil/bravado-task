@@ -68,8 +68,7 @@ export default {
         return
       }
       const filtered = this.getFilteredUsers(query)
-
-      this.filteredUsers = this.highlighUsers(filtered)
+      this.filteredUsers = this.highlighUsers(query, filtered)
     }, 1000),
   },
 }
