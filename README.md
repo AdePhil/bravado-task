@@ -2,6 +2,10 @@
 
 A simple profile search application
 
+## Requirement
+
+Node - v12.22.0
+
 ## Stack
 
 - Nuxt.js - Vue Framework of choice.
