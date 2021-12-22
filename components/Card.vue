@@ -11,6 +11,7 @@
         <p>,&nbsp;</p>
         <p class="city" v-html="item.city"></p>
       </div>
+      <button class="action">SKIP SELECTION</button>
     </div>
     <p class="email" v-html="item.email"></p>
   </div>
@@ -36,6 +37,19 @@ export default {
   padding: 20px;
   transition: 200ms ease;
   border: 2px solid transparent;
+
+  .action {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin-top: 30px;
+    cursor: pointer;
+    color: $green2;
+    transition: color 200ms ease;
+    &:hover {
+      color: $green;
+    }
+  }
 
   .full-address {
     display: flex;

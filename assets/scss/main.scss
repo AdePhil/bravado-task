@@ -13,3 +13,24 @@ html {
 span.highlight {
   background-color: $yellow;
 }
+
+.app {
+  background-color: $grey;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  max-height: 700px;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.fixed-input {
+  position: sticky;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}

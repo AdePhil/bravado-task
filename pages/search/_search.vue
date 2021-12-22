@@ -19,13 +19,24 @@
 import Input from '~/components/Input'
 import CardList from '~/components/CardList'
 import SearchMixin from '~/mixins/search'
-
 export default {
-  name: 'IndexPage',
   components: {
     Input,
     CardList,
   },
   mixins: [SearchMixin],
+
+  mounted() {
+    this.query = this.$route.params.search
+    this.updateResults(this.query)
+  },
 }
 </script>
+<style scoped lang="scss">
+.fixed-input {
+  position: sticky;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+</style>

@@ -1,6 +1,6 @@
 # BRAVADO QUEST
 
-Frontend Nuxt.js app
+A simple profile search application
 
 ## Stack
 
@@ -34,6 +34,7 @@ $ yarn generate
 - Search for users
 - Debounce input search
 - Implemented infinite scroll to optimize data fetching
+- Clear Input button
 
 ## Possible Improvements
 
