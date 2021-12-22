@@ -13,11 +13,14 @@
         <CardList :items="filteredUsers" />
         <infinite-loading
           v-if="filteredUsers.length"
-          spinner="bubbles"
           :identifier="infiniteId"
+          spinner="bubbles"
           @infinite="handleScroll"
         ></infinite-loading>
-        <p v-if="!filteredUsers.length">No results available for {{ query }}</p>
+
+        <p v-if="!filteredUsers.length" class="no-result">
+          No results available for {{ query }}
+        </p>
       </div>
     </div>
   </div>

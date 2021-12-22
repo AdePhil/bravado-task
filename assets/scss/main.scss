@@ -28,8 +28,12 @@ span.highlight {
 }
 
 .list-container {
-  height: 700px;
+  max-height: 700px;
   overflow-y: scroll;
+}
+
+.no-result {
+  padding: 0 10px;
 }
 
 .fixed-input {
