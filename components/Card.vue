@@ -6,6 +6,7 @@
     <div class="center-text">
       <h2 class="name" v-html="item.name"></h2>
       <p class="title" v-html="item.title">{{}}</p>
+      <p class="email-mobile" v-html="item.email"></p>
       <div class="full-address">
         <p class="address" v-html="item.address"></p>
         <p>,&nbsp;</p>
@@ -89,6 +90,9 @@ export default {
   .email {
     margin-left: auto;
     margin-right: 10px;
+    &-mobile {
+      display: none;
+    }
   }
   .title {
     font-weight: 600;
@@ -107,7 +111,10 @@ export default {
       margin-top: 0;
     }
     .email {
-      margin-left: 0;
+      display: none;
+      &-mobile {
+        display: block;
+      }
     }
   }
 }

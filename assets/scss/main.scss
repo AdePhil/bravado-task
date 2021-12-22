@@ -23,9 +23,13 @@ span.highlight {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  max-height: 700px;
-  overflow-y: scroll;
   background-color: white;
+  padding-bottom: 30px;
+}
+
+.list-container {
+  height: 700px;
+  overflow-y: scroll;
 }
 
 .fixed-input {

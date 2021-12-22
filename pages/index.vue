@@ -9,13 +9,17 @@
           placeholder="Search for user"
         />
       </div>
-      <CardList :items="filteredUsers" />
-      <infinite-loading
-        v-if="filteredUsers.length"
-        spinner="bubbles"
-        @infinite="handleScroll"
-      ></infinite-loading>
-      <p v-if="!filteredUsers.length">No results available for {{ query }}</p>
+      <div class="list-container">
+        <CardList :items="filteredUsers" />
+        <infinite-loading
+          v-if="filteredUsers.length"
+          :identifier="infiniteId"
+          spinner="bubbles"
+          @infinite="handleScroll"
+        ></infinite-loading>
+
+        <p v-if="!filteredUsers.length">No results available for {{ query }}</p>
+      </div>
     </div>
   </div>
 </template>
