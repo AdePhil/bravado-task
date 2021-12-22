@@ -35,11 +35,13 @@ export default {
 
   .name {
     margin-top: 0;
+    font-size: 25px;
   }
   p {
     color: #666;
     margin-bottom: 8px;
     margin-top: 0;
+    font-size: 14px;
   }
   &:hover {
     border-color: #778dfe;
