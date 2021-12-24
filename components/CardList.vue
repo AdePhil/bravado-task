@@ -1,6 +1,12 @@
 <template>
   <div class="card-list">
-    <Card v-for="(user, i) in items" :key="user.email + i" :item="user" />
+    <Card
+      v-for="(user, i) in items"
+      :key="user.email + i"
+      :item="user"
+      :selected-items="selectedItems"
+      @toggleSelection="toggleSelection"
+    />
   </div>
 </template>
 
@@ -14,6 +20,15 @@ export default {
     items: {
       type: Array,
       default: () => [],
+    },
+    selectedItems: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  methods: {
+    toggleSelection(id) {
+      this.$emit('toggleSelection', id)
     },
   },
 }

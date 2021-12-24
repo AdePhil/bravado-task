@@ -1,17 +1,20 @@
 import debounce from 'lodash.debounce'
+import { v4 as uuidv4 } from 'uuid'
 import users from '~/static/users.json'
 import config from '~/config'
+import { storage } from '~/utils'
 
 const searchMixin = {
   data() {
     return {
       query: '',
-      users,
+      users: users.map((user, i) => ({ ...user, id: i + 1 })),
       page: 1,
       perPage: 10,
-      filteredUsers: users.slice(0, 10),
+      filteredUsers: [],
       scrollData: [],
-      infiniteId: +new Date(),
+      infiniteId: uuidv4(),
+      selectedUsers: storage.get('selected'),
     }
   },
 
@@ -25,8 +28,16 @@ const searchMixin = {
     },
   },
   methods: {
+    toggleSelection(id) {
+      if (this.selectedUsers[id]) {
+        this.$delete(this.selectedUsers, id, id)
+      } else {
+        this.$set(this.selectedUsers, id, id)
+      }
+      storage.set('selected', this.selectedUsers)
+    },
     refreshInfiniteLoading() {
-      this.infiniteId += 1
+      this.infiniteId = uuidv4()
     },
     handleClearInput() {
       this.query = ''
@@ -40,10 +51,10 @@ const searchMixin = {
     },
     getFilteredUsers(query, $scrollState) {
       if (this.scrollData.length === 0) {
-        this.scrollData = users?.filter((obj) =>
+        this.scrollData = this.users?.filter((obj) =>
           Object.entries(obj).some(([key, value]) => {
             return (
-              key !== 'avatar' &&
+              (key !== 'avatar' || key !== 'id') &&
               String(value).toLowerCase().includes(query.toLowerCase())
             )
           })
@@ -68,11 +79,11 @@ const searchMixin = {
       const regex = new RegExp(query, 'gi')
       return filteredUsers.map((data) => {
         return Object.entries(data).reduce((acc, [key, value]) => {
-          const modifiedValue = value.replace(
-            regex,
-            `<span class="highlight">${query}</span>`
-          )
-          if (key !== 'avatar') {
+          if (key !== 'avatar' && key !== 'id') {
+            const modifiedValue = value.replace(
+              regex,
+              `<span class="highlight">${query}</span>`
+            )
             acc[key] = modifiedValue
           } else {
             acc[key] = value
@@ -85,11 +96,14 @@ const searchMixin = {
       if (!query) {
         const start = this.perPage * (this.page - 1)
         const end = this.perPage * this.page
-        this.filteredUsers = [...this.filteredUsers, ...users.slice(start, end)]
+        this.filteredUsers = [
+          ...this.filteredUsers,
+          ...this.users.slice(start, end),
+        ]
 
-        if ($scrollState && end < users.length) {
+        if ($scrollState && end < this.users.length) {
           $scrollState.loaded()
-        } else if ($scrollState && end > users.length) {
+        } else if ($scrollState && end > this.users.length) {
           $scrollState.complete()
         }
         return

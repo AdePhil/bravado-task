@@ -6,16 +6,6 @@ A simple profile search application [link](https://bravado-task.netlify.app/)
 
 Node - v12.22.0
 
-## Stack
-
-- Nuxt.js - Vue Framework of choice.
-- Scss - Styling (scoped)
-- Vue Infinite Loading - Used to handling infinite scrolling
-- Lodash Debounce - Used to debounce search input
-- Google Fonts (Open Sans) - Font family of choice
-- Eslint - Used for static code analysis
-- Prettier - Used for code formatting
-
 ## Setup
 
 ```bash
@@ -33,6 +23,17 @@ $ yarn start
 $ yarn generate
 ```
 
+## Stack
+
+- Nuxt.js - Vue Framework of choice.
+- Scss - Styling (scoped)
+- Vue Infinite Loading - Used to handling infinite scrolling
+- Lodash Debounce - Used to debounce search input
+- Google Fonts (Open Sans) - Font family of choice
+- Eslint - Used for static code analysis
+- Prettier - Used for code formatting
+- UUID - Used for generating unique ids
+
 ## Features Covered
 
 - Implemented search for users
@@ -41,6 +42,7 @@ $ yarn generate
 - Implemented infinite scroll to optimize data fetching
 - Clear Input button
 - stateful search from (/search/'keyword')
+- Mark/Skip selection (persisted to localstorage)
 
 ## Possible Improvements
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div :class="{ selected: isSelected, card: true }">
     <div class="image-bg">
       <img :src="item.avatar" :alt="item.name" class="image" />
     </div>
@@ -13,7 +13,16 @@
         <p class="city" v-html="item.city"></p>
       </div>
       <div class="action-divider">
-        <button class="action">SKIP SELECTION</button>
+        <button
+          v-if="isSelected"
+          class="action"
+          @click="toggleSelection(item.id)"
+        >
+          SKIP SELECTION
+        </button>
+        <button v-else class="action" @click="toggleSelection(item.id)">
+          MARK SELECTION
+        </button>
       </div>
     </div>
     <p class="email" v-html="item.email"></p>
@@ -26,6 +35,20 @@ export default {
     item: {
       type: Object,
       default: () => ({}),
+    },
+    selectedItems: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    isSelected() {
+      return !!this.selectedItems[this.item.id]
+    },
+  },
+  methods: {
+    toggleSelection(id) {
+      this.$emit('toggleSelection', id)
     },
   },
 }
@@ -40,6 +63,10 @@ export default {
   padding: 20px;
   transition: 200ms ease;
   border: 2px solid transparent;
+
+  &.selected {
+    border-color: $blue;
+  }
 
   .action {
     &-divider {
@@ -72,9 +99,6 @@ export default {
     margin-bottom: 8px;
     margin-top: 0;
     font-size: 14px;
-  }
-  &:hover {
-    border-color: #778dfe;
   }
   .image {
     height: 200px;
